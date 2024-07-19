@@ -1,13 +1,15 @@
 
-clients = 'pablo, ricardo,'
+clients = 'pablo, ricardo, '
 
 def create_client(client_name):
     global clients
-
-    clients += client_name 
-    _add_coma()
-
-
+    
+    if client_name not in clients:
+        clients += client_name
+        _add_coma()
+    else:
+        print('Client already is in the client\'s list')
+     
 def _add_coma():
     global clients
     
@@ -20,12 +22,13 @@ def list_clients():
     print(clients)
 
 
-def _print_wolcome():
+def _print_welcome():
     print('WELCOME TO PLATZI VENTAS')
     print('*' * 50)
     print('what would you like to do today?')
     print('[C]reate client')
     print('[D]elete client')
+
 
 if __name__ == '__main__':
     _print_welcome()
@@ -39,9 +42,8 @@ if __name__ == '__main__':
     elif command =='D':
         pass
     else:
-        prin('Invalid command')
-        _print_welcome()
+        print('Invalid command')
+        #_print_welcome()
 
-    print(clients)
 
 
