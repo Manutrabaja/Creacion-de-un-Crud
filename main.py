@@ -20,14 +20,28 @@ def list_clients():
     print(clients)
 
 
-if __name__ == '__main__':
-    list_clients()
-    
-    create_client(' David')
-    
-    list_clients()
+def _print_wolcome():
+    print('WELCOME TO PLATZI VENTAS')
+    print('*' * 50)
+    print('what would you like to do today?')
+    print('[C]reate client')
+    print('[D]elete client')
 
-    create_client(input(f'Ingresa nombre del nuevo cliente: '))
+if __name__ == '__main__':
+    _print_welcome()
+    
+    command = input()
+    
+    if command == 'C':
+        client_name = (input(f'Wtha is the client name? '))
+        create_client(client_name)
+        list_clients()
+    elif command =='D':
+        pass
+    else:
+        prin('Invalid command')
+        _print_welcome()
+
     print(clients)
 
 
