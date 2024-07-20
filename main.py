@@ -2,16 +2,20 @@ import sys
 
 
 
-clients = 'pablo,ricardo,'
+clients = ['Pablo','Ricardo']
 
 
+def list_clients():
+    global clients
+    for idx,client in enumerate(clients):
+        print('{}: {}'.format(idx,client))
 
 def create_client(client_name):
     global clients
     
     if client_name not in clients:
-        clients += client_name
-        _add_coma()
+        clients.append(client_name)
+
     else:
         print('Client already is in the client\'s list')
    
@@ -19,9 +23,9 @@ def create_client(client_name):
 def update_client(client_name, updated_client_name):
     global clients
 
-
     if client_name in clients:
-        clients = clients.replace(client_name + ',', updated_client_name + ', ')
+        index = clients.index(client_name)
+        clients[index] = updated_client_name
     else:
         _is_not_in_list()
 
@@ -30,30 +34,19 @@ def delete_client(client_name):
     global clients
 
     if client_name in clients:
-        clients = clients.replace(client_name + ',', '')
+        clients.remove(client_name)
     else:
         _is_not_in_list()
 
 
 def search_client(client_name):
     global clients
-    clients_list = clients.split(',')
     
-    for client in clients_list:
+    for client in clients:
         if client != client_name:
             continue
         else:
             return True
-
-
-def _add_coma():
-    global clients
-    clients += ',' 
-
-
-def list_clients():
-    global clients
-    print(clients)
 
 
 def _print_welcome():
@@ -65,7 +58,6 @@ def _print_welcome():
     print('[U]pdate client')
     print('[D]elete client')
     print('[S]earch client')
-    
 
 
 def _get_client_name():
@@ -107,7 +99,8 @@ if __name__ == '__main__':
 
     elif command == 'U':
         client_name = _get_client_name()
-        updated_client_name = input(f'what is the updated client name: ')
+        updated = input(f'what is the updated client name: ')
+        updated_client_name = updated.capitalize() 
         update_client(client_name, updated_client_name)
         list_clients()
 
@@ -121,7 +114,7 @@ if __name__ == '__main__':
         found = search_client(client_name)
 
         if found:
-            print('The client is in the client\'s list')
+            print('The client {} is in the client\'s list'. format(client_name))
         else:
             print('The client: {} is not in our client\'s list'. format(client_name))
 
