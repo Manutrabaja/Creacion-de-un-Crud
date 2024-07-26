@@ -2,13 +2,35 @@ import sys
 
 
 
-clients = ['Pablo','Ricardo']
+clients = [
+    {   'name': 'Pablo',
+        'company': 'Google',
+        'email': 'Pablo@google.com',
+        'position': 'Software engineer',
+        
+        }, {
+        
+        'name': 'Ricardo',
+        'company': 'Platzi',
+        'email': 'Ricardo@platzi.com',
+        'position': 'Data engineer', 
+
+        }
+
+        ]
 
 
 def list_clients():
     global clients
     for idx,client in enumerate(clients):
-        print('{}: {}'.format(idx,client))
+        print('{uid}| {name} | {company} | {email} | {position}'.format(
+            uid = idx, 
+            name = client['name'],
+            company = client['company'],
+            email = client['email'], 
+            position = client['position']
+            ))
+
 
 def create_client(client_name):
     global clients
@@ -42,8 +64,8 @@ def delete_client(client_name):
 def search_client(client_name):
     global clients
     
-    for client in clients:
-        if client != client_name:
+    for client1 in clients:
+        if client1 != client_name:
             continue
         else:
             return True
@@ -60,17 +82,28 @@ def _print_welcome():
     print('[S]earch client')
 
 
-def _get_client_name():
-    name_client = None
-    
-    while not name_client:
-        name_client = input(f'Wtha is the client name? ')
-        name_client = name_client.capitalize()
-            
-        if name_client == 'Exit':
-            sys.exit()
+def _get_client_field(field_name):
+    field = None
 
-    return name_client 
+    while not field:
+        field = input('Wtha is the client {} ? '.format(field_name)).capitalize()
+
+        if field == 'Exit':
+            sys.exit()
+    
+    return field
+
+# def _get_client_name():
+#     name_client = None
+    
+#     while not name_client:
+#         name_client = input(f'Wtha is the client name? ')
+#         name_client = name_client.capitalize()
+            
+#         if name_client == 'Exit':
+#             sys.exit()
+
+#     return name_client 
 
 
 def _is_not_in_list():
@@ -85,32 +118,38 @@ def _is_not_in_list():
 
 if __name__ == '__main__':
     _print_welcome()
-    command = input()
+    command = input(str())
     command = command.upper()
 
     
     if command == 'C':
-        client_name = _get_client_name()
-        create_client(client_name)
+        client = {
+                'name':_get_client_field('name'),
+                'company':_get_client_field('company'),
+                'email':_get_client_field('email'),
+                'position': _get_client_field('position'),
+            }
+
+        create_client(client)
         list_clients()
     
     elif command == 'L':
         list_clients()
 
     elif command == 'U':
-        client_name = _get_client_name()
+        client_name = _get_client_field('name'),
         updated = input(f'what is the updated client name: ')
         updated_client_name = updated.capitalize() 
         update_client(client_name, updated_client_name)
         list_clients()
 
     elif command == 'D':
-        client_name = _get_client_name()
+        client_name = _get_client_field('name'),
         delete_client(client_name) 
         list_clients()
 
     elif command == 'S':
-        client_name = _get_client_name()
+        client_name = _get_client_field('name'),
         found = search_client(client_name)
 
         if found:
