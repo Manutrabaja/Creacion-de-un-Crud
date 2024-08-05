@@ -3,13 +3,13 @@ import csv
 import os
 
 CLIENT_TABLE = '.clients.csv'
-CLIENT_SCHEMA = ['name',      'last_name',      'company',      'email',      'position']
+CLIENT_SCHEMA = ['name', 'last_name', 'company', 'email', 'position']
 clients = []
 
 
 def _initilize_client_from_storage():
     with open(CLIENT_TABLE, mode='r') as f:
-        reader = csv.DictReader(f, fieldnames=CLIENT_SCHEMA) 
+        reader = csv.DictReader(f, fieldnames = CLIENT_SCHEMA) 
 
         for row in reader:
             clients.append(row)
@@ -18,11 +18,11 @@ def _initilize_client_from_storage():
 def _save_client_to_storage():
     temp_table_name = '{}.temp'.format(CLIENT_TABLE)
     with open(temp_table_name, mode='w') as f:
-        writer = csv.DictWriter(f, fieldnames=CLIENT_SCHEMA)
+        writer = csv.DictWriter(f, fieldnames = CLIENT_SCHEMA)
         writer.writerows(clients)
 
         os.remove(CLIENT_TABLE)
-        os.rename(temp_table_name, CLIENT_TABLE)
+    os.rename(temp_table_name, CLIENT_TABLE)
 
 
 
@@ -47,7 +47,7 @@ def create_client(client_name):
 
     else:
         print('Client already is in the client\'s list')
-   
+
 
 def update_client(clients,client_name):
     i = 'name'
@@ -77,21 +77,24 @@ def update_client(clients,client_name):
                 print('bey')
                 sys.exit()
 
+
         elif client[i] != (f'{client_name}'):
             _is_not_in_list()
             break
 
 
 def delete_client(clients,client_name,):
-    for client in clients:
-        if client['name'] == (f'{client_name}'):
-            clients.remove(client)
+    i = 'name'
+    for j,client in enumerate(clients):
+        if client[i] == (f'{client_name}'):
+            del clients[j]
+            return True
         else:
             _is_not_in_list()
             break
 
 
-def search_client(client_name, client_last_name):
+def search_client(client_name):
     global clients
     
     i = 'name'
@@ -185,7 +188,6 @@ if __name__ == '__main__':
     elif command == 'U':
         client_name = _get_client_field('name')
         update_client(clients,client_name)
-        
 
     elif command == 'D':
         client_name = _get_client_field('name')
@@ -208,4 +210,3 @@ if __name__ == '__main__':
         # _command_input()
 
     _save_client_to_storage()
-
